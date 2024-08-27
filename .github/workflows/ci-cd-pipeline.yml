@@ -13,8 +13,16 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DOCKER_SSH_KEY }}
 
       - name: Build Docker image
         run: docker build -t fullstack-app:latest .
+
+      - name: Deploy to DigitalOcean
+        run: |
+          ssh root@your_droplet_ip 'docker stop fullstack-app || true && docker rm fullstack-app || true'
+          scp -r . root@64.227.117.241:/app
+          ssh root@64.227.117.241 'docker run -d -p 80:80 --name fullstack-app fullstack-app:latest'
