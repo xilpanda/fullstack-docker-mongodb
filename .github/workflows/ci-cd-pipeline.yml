@@ -25,9 +25,9 @@ jobs:
         run: |
           # Stop and remove any existing container with the same name
           ssh -o StrictHostKeyChecking=no root@64.227.117.241 'docker stop fullstack-app || true && docker rm fullstack-app || true'
-          
+
           # Copy the current directory to the droplet's /app directory
-          scp -o StrictHostKeyChecking=no -r ./ root@64.227.117.241:/app
-          
+          scp -o StrictHostKeyChecking=no -r ./* root@64.227.117.241:/app
+
           # Run the Docker container on the droplet
           ssh -o StrictHostKeyChecking=no root@64.227.117.241 'docker run -d -p 80:80 --name fullstack-app fullstack-app:latest'
