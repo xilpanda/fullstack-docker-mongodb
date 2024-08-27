@@ -32,5 +32,8 @@ jobs:
           # Copy all files in the current directory to the droplet's /app directory
           scp -o StrictHostKeyChecking=no -r * root@64.227.117.241:/app
 
+          # Build Docker image on the droplet
+          ssh -o StrictHostKeyChecking=no root@64.227.117.241 'cd /app && docker build -t fullstack-app:latest .'
+
           # Run the Docker container on the droplet
           ssh -o StrictHostKeyChecking=no root@64.227.117.241 'docker run -d -p 80:80 --name fullstack-app fullstack-app:latest'
