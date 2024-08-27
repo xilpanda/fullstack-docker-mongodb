@@ -23,6 +23,6 @@ jobs:
 
       - name: Deploy to DigitalOcean
         run: |
-          ssh root@your_droplet_ip 'docker stop fullstack-app || true && docker rm fullstack-app || true'
+          ssh root@64.227.117.241 'docker stop fullstack-app || true && docker rm fullstack-app || true'
           scp -r . root@64.227.117.241:/app
           ssh root@64.227.117.241 'docker run -d -p 80:80 --name fullstack-app fullstack-app:latest'
